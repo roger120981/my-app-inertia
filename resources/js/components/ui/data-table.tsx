@@ -24,9 +24,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
 import { DataTableToolbar } from "@/components/ui/data-table-toolbar";
+
+interface FilterConfig<TData> {
+  columnId: keyof TData;
+  type: "text" | "select" | "custom";
+  label?: string;
+  options?: { value: string; label: string }[];
+  render?: (table: import("@tanstack/react-table").Table<TData>) => React.JSX.Element;
+}
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -41,19 +48,22 @@ interface DataTableProps<TData, TValue> {
     path: string;
     links: { url: string | null; label: string; active: boolean }[];
   };
+  filterColumn?: string;
+  filterPlaceholder?: string;
+  filterConfig?: FilterConfig<TData>[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   meta,
+  filterColumn,
+  filterPlaceholder,
+  filterConfig,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const table = useReactTable({
@@ -71,8 +81,8 @@ export function DataTable<TData, TValue>({
           }
         : undefined,
     },
-    pageCount: meta?.last_page,
-    manualPagination: true, // Tell the table that we're handling pagination server-side
+    pageCount: meta?.last_page ?? -1,
+    manualPagination: !!meta,
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
@@ -88,24 +98,30 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} />
+      <DataTableToolbar
+        table={table}
+        filterColumn={filterColumn}
+        filterPlaceholder={filterPlaceholder}
+        filterConfig={filterConfig}
+      />
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id} colSpan={header.colSpan}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+            {table.getHeaderGroups().map((headerGroup, index) => (
+              <TableRow key={headerGroup.id || index}>
+                {headerGroup.headers.map((header, headerIndex) => (
+                  <TableHead
+                    key={header.id || headerIndex}
+                    colSpan={header.colSpan ?? 1}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
