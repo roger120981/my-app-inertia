@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/inertiaui/table/react/src/**/*.{js,jsx}';
+
 @plugin 'tailwindcss-animate';
 
 @source '../views';
@@ -155,5 +159,77 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+}
+
+/* InertiaUI Table Custom Styles */
+@layer components {
+    /* Fix filter overlay issue */
+    .inertiaui-table-wrapper {
+        @apply relative;
+    }
+    
+    /* Ensure proper spacing for filters */
+    .inertiaui-table-filters {
+        @apply mb-4 space-y-2;
+        z-index: 1000;
+    }
+    
+    /* Style filter buttons to match app theme */
+    .inertiaui-table-filter-button {
+        @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+        @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+        @apply h-9 px-3;
+    }
+    
+    /* Style active filter tags */
+    .inertiaui-table-filter-tag {
+        @apply inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+        @apply border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80;
+    }
+    
+    /* Style filter dropdown */
+    .inertiaui-table-filter-dropdown {
+        @apply z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md;
+    }
+    
+    /* Style table header */
+    .inertiaui-table-header {
+        @apply border-b bg-muted/50;
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Style table cells */
+    .inertiaui-table-cell {
+        @apply border-b px-4 py-3 text-left align-middle;
+    }
+    
+    /* Style search input */
+    .inertiaui-table-search input {
+        @apply flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+    }
+    
+    /* Fix filter input positioning */
+    .inertiaui-table-filter-input {
+        @apply relative;
+        margin-top: 0.5rem;
+    }
+    
+    /* Ensure filter controls don't overlap with table header */
+    .inertiaui-table-controls {
+        @apply mb-4 flex flex-wrap items-center gap-2;
+        position: relative;
+        z-index: 20;
+    }
+    
+    /* Style pagination */
+    .inertiaui-table-pagination {
+        @apply mt-4 flex items-center justify-between;
+    }
+    
+    /* Style sort indicators */
+    .inertiaui-table-sort {
+        @apply inline-flex items-center gap-1 hover:text-foreground;
     }
 }

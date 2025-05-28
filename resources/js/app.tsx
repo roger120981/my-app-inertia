@@ -1,5 +1,5 @@
 import '../css/app.css';
-import '@inertiaui/table-react/style.css'
+import '@inertiaui/table-react/dist/style.css'
 
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
