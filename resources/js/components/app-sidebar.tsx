@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { LayoutGrid, Users } from 'lucide-react';
+import { LayoutGrid, Users, UserCheck, Briefcase, Building, Heart } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -17,6 +17,26 @@ const mainNavItems: NavItem[] = [
         title: 'Users',
         href: '/users',
         icon: Users,
+    },
+    {
+        title: 'Participants',
+        href: '/participants',
+        icon: UserCheck,
+    },
+    {
+        title: 'Caregivers',
+        href: '/caregivers',
+        icon: Heart,
+    },
+    {
+        title: 'Services',
+        href: '/services',
+        icon: Briefcase,
+    },
+    {
+        title: 'Agencies',
+        href: '/agencies',
+        icon: Building,
     },
 ];
 
