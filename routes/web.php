@@ -13,6 +13,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
     
     Route::resource('users', App\Http\Controllers\UsersController::class);
+    Route::resource('case-managers', App\Http\Controllers\CaseManagersController::class);
     Route::get('participants', [App\Http\Controllers\ParticipantsController::class, 'index'])->name('participants.index');
     Route::get('services', [App\Http\Controllers\ServicesController::class, 'index'])->name('services.index');
     Route::get('agencies', [App\Http\Controllers\AgenciesController::class, 'index'])->name('agencies.index');
