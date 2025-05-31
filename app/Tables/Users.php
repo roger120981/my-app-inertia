@@ -35,12 +35,19 @@ class Users extends Table
             Filters\TextFilter::make('name', 'Full Name'),
             Filters\TextFilter::make('email'),
             Filters\DateFilter::make('email_verified_at')->nullable(),
+            Filters\DateFilter::make('created_at')->nullable(),
         ];
     }
 
     public function actions(): array
     {
         return [
+            Action::make('View', fn (User $user, Url $url) => $url
+                ->route('users.show', $user)
+            )
+                ->dataAttributes(['view', 'navigate' => true])
+                ->icon('EyeIcon'),
+
             Action::make('Edit', fn (User $user, Url $url) => $url
                 ->route('users.edit', $user)
             )
