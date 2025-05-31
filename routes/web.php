@@ -16,7 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('case-managers', App\Http\Controllers\CaseManagersController::class);
     Route::resource('participants', App\Http\Controllers\ParticipantsController::class);
     Route::resource('caregivers', App\Http\Controllers\CaregiversController::class);
-    Route::get('services', [App\Http\Controllers\ServicesController::class, 'index'])->name('services.index');
+    Route::resource('services', App\Http\Controllers\ServicesController::class);
     Route::get('agencies', [App\Http\Controllers\AgenciesController::class, 'index'])->name('agencies.index');
 });
 
