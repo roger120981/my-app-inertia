@@ -17,7 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('participants', App\Http\Controllers\ParticipantsController::class);
     Route::resource('caregivers', App\Http\Controllers\CaregiversController::class);
     Route::resource('services', App\Http\Controllers\ServicesController::class);
-    Route::get('agencies', [App\Http\Controllers\AgenciesController::class, 'index'])->name('agencies.index');
+    Route::resource('agencies', App\Http\Controllers\AgenciesController::class);
 });
 
 Route::inertiaTable();
